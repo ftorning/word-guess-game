@@ -12,6 +12,23 @@ var alphaCodes = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","A
 "SK","SI","SB","SO","ZA","GS","SS","ES","LK","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TL","TG","TK","TO","TT",
 "TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM","UY","UZ","VU","VE","VN","VI","WF","EH","YE","ZM","ZW"];
 
+var characterArray = ["a","b","c","d","e","f","g","h","i","j","k","l",
+                      "m","n","o","p","q","r","s","t","u","v","w","x",
+                      "y","z","'","-"];
+
+function generateSelectors() {
+    mySelectors = document.getElementById('selectors');
+    charList = document.createElement('ul');
+    charList.id = 'charList';
+    for (let i = 0; i < characterArray.length; i++) {
+        char = document.createElement('li');
+        char.classList.add('char');
+        char.innerHTML = characterArray[i];
+        charList.appendChild(char);
+    }
+    mySelectors.appendChild(charList);
+}
+
 function getRandomCountry() {
     var alphaCode = alphaCodes[Math.floor(Math.random() * alphaCodes.length)].toLowerCase();
     console.log(alphaCode);
@@ -44,4 +61,5 @@ function countrySelector(alphaCode) {
     request.send();
 }
 
-countrySelector(getRandomCountry());
+generateSelectors();
+// countrySelector(getRandomCountry());
