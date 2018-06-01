@@ -1,5 +1,9 @@
 console.log('Ayyyooo');
 
+var banner = document.getElementById('banner');
+var countryGame = document.getElementById('country-name-game');
+var capitalGame = document.getElementById('capital-name-game');
+var gameContainer = document.getElementById('game-container');
 
 var country;
 var alphaCodes = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM",
@@ -15,6 +19,26 @@ var alphaCodes = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","A
 var characterArray = ["a","b","c","d","e","f","g","h","i","j","k","l",
                       "m","n","o","p","q","r","s","t","u","v","w","x",
                       "y","z","'","-"];
+
+
+countryGame.addEventListener("click", startCountryGame);
+
+function startCountryGame() {
+    visibilitySwap()
+    
+}
+
+
+function visibilitySwap() {
+    if (banner.classList.contains("d-none")) {
+        banner.classList.remove("d-none");
+        gameContainer.classList.add("d-none");
+    } else {
+        banner.classList.add("d-none");
+        gameContainer.classList.remove("d-none");
+    }
+}
+
 
 function generateSelectors() {
     mySelectors = document.getElementById('selectors');
