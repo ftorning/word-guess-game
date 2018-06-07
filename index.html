@@ -28,22 +28,50 @@
         <div class="row">
             <div class="col-xs-0 col-md-3 sidebar"></div>
             <div class="col-xs-12 col-md-6">
-                <p>game dashboard</p>
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Game Dashboard</h2>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <p>Guesses Left: <span id="guess-count"></span></p>
+                                
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <p>Hints Used: <span id="hint-count"></span></p>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <p>Games Won: <span id="win-count"></span></p>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <p>Games Lost: <span id="loss-count"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-0 col-md-3 sidebar"></div>
+        </div>
+        <div class="row d-none" id="hint-area">
+            <div class="col-xs-0 col-md-3 sidebar"></div>
+            <div class="col-xs-12 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Hint</h2>
+                        <ul id="hint-list"></ul>
+                    </div>
+                </div>
             </div>
             <div class="col-xs-0 col-md-3 sidebar"></div>
         </div>
         <div class="row">
             <div class="col-xs-0 col-md-3 sidebar"></div>
-            <div class="col-xs-12 col-md-6">
-                <p>hint area</p>
-            </div>
-            <div class="col-xs-0 col-md-3 sidebar"></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-0 col-md-3 sidebar"></div>
-            <div class="col-xs-12 col-md-6">
-                <p>game area</p>
-                <div id="game-area"></div>
+            <div class="col-xs-12 col-md-6 text-center">
+                <h2>Your Word</p>
+                <h1 id="game-state"></h1>
+                <!-- <div id="game-area"></div> -->
             </div>
             <div class="col-xs-0 col-md-3 sidebar"></div>
         </div>
@@ -54,6 +82,9 @@
             </div>
             <div class="col-xs-0 col-md-3 sidebar"></div>
         </div>
+        <button type="button" class="btn btn-success btn-lg" id="hint-button">Get Hint</button>
+    </div>
+    <div class="container d-none" id="post-game-container">
         <div class="row">
             <div class="col-xs-0 col-md-3 sidebar"></div>
             <div class="col-xs-12 col-md-6">

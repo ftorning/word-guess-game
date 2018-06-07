@@ -4,8 +4,31 @@ var banner = document.getElementById('banner');
 var countryGame = document.getElementById('country-name-game');
 var capitalGame = document.getElementById('capital-name-game');
 var gameContainer = document.getElementById('game-container');
+var postGameContainer = document.getElementById('post-game-container');
+var guessDisplay = document.getElementById('guess-count');
+var hintDisplay = document.getElementById('hint-count');
+var winDisplay = document.getElementById('win-count');
+var lossDisplay = document.getElementById('loss-count');
+var gameStateDisplay = document.getElementById('game-state');
+var hintsDisplay = document.getElementById('hint-area');
+var hintRequest = document.getElementById('hint-button');
+var hintList = document.getElementById('hint-list');
 
+var selectors;
+var guessCount = 8;
+var gameType = '';
+var score = 100;
+var word = '';
+var wordSplit = [];
+var wordLength = 0;
 var country;
+var countryName = '';
+var gamesWon = 0;
+var gamesLost = 0;
+var hintCount = 0;
+var currentGameState = [];
+var guessArray = [];
+
 var alphaCodes = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM",
 "BT","BO","BA","BW","BV","BR","VG","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","HK","MO","CX","CC", "CO","KM","CG","CD","CK","CR","CI","HR","CU","CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER","EE","ET","FK","FO","FJ",
 "FI","FR","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL","GD","GP","GU","GT","GG","GN","GW","GY","HT","HM","VA","HN",
@@ -18,29 +41,73 @@ var alphaCodes = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","A
 
 var characterArray = ["a","b","c","d","e","f","g","h","i","j","k","l",
                       "m","n","o","p","q","r","s","t","u","v","w","x",
-                      "y","z","'","-"];
+                      "y","z"];
 
 
 countryGame.addEventListener("click", startCountryGame);
+capitalGame.addEventListener("click", startCapitalGame);
+hintRequest.addEventListener("click", getHint);
 
-function startCountryGame() {
-    visibilitySwap()
+function getHint() {
+    hintsDisplay.classList.remove("d-none");
     
 }
 
+function guess() {
+    this.style.backgroundColor = "#A9A9A9";
+    this.style.pointerEvents = "none";
+    setGameBoard(this.textContent);
+    console.log(this.textContent);
+}
 
-function visibilitySwap() {
-    if (banner.classList.contains("d-none")) {
+function startCountryGame() {
+    word = country.name;
+    gameType = 'country';
+    startGame();
+}
+
+function startCapitalGame() {
+    word = country.capital;
+    gameType = 'capital';
+    startGame();
+}
+
+function startGame() {
+    visibilitySwap('game');
+    setSelectors();
+    guessCount = 8;
+    wordSplit = word.split("");
+    wordLength = wordSplit.length;
+    setDashboard();
+    setGameBoard();
+      
+}
+
+function setDashboard() {
+    guessDisplay.textContent = guessCount;
+    hintDisplay.textContent = hintCount;
+    winDisplay.textContent = gamesWon;
+    lossDisplay.textContent = gamesLost;
+}
+
+function visibilitySwap(container) {
+    if (container === "banner") {
         banner.classList.remove("d-none");
         gameContainer.classList.add("d-none");
-    } else {
+        postGameContainer.classList.add("d-none");
+    } else if (container === "game") {
         banner.classList.add("d-none");
         gameContainer.classList.remove("d-none");
+        postGameContainer.classList.add("d-none");
+    } else if (container === "post-game") {
+        banner.classList.add("d-none");
+        gameContainer.classList.add("d-none");
+        postGameContainer.classList.remove("d-none");
     }
 }
 
 
-function generateSelectors() {
+function setSelectors() {
     mySelectors = document.getElementById('selectors');
     charList = document.createElement('ul');
     charList.id = 'charList';
@@ -48,9 +115,49 @@ function generateSelectors() {
         char = document.createElement('li');
         char.classList.add('char');
         char.innerHTML = characterArray[i];
+        char.addEventListener("click", guess);
         charList.appendChild(char);
     }
     mySelectors.appendChild(charList);
+}
+
+function setGameBoard(guess=null) {
+    if (!guess) {  // && currentGameState.length === 0
+        for (let i = 0; i < wordSplit.length; i++) {
+            if (characterArray.includes(wordSplit[i].toLowerCase())) {
+                currentGameState.push("_");
+            } else {
+                currentGameState.push(wordSplit[i]);
+            }
+        }
+        gameStateDisplay.textContent = currentGameState.join('');
+    } else {
+        let correctGuess = false;
+        for (let i = 0; i < currentGameState.length; i++) {
+            if (guess === wordSplit[i].toLowerCase()) {
+                currentGameState[i] = wordSplit[i];
+                correctGuess = true;
+            }
+        }
+        if (!correctGuess) {guessCount--;}
+        gameStateDisplay.textContent = currentGameState.join('');
+        setDashboard();
+        if (guessCount > 0 && !currentGameState.includes("_")) {
+            gameWon();
+        } else if (guessCount == 0 && currentGameState.includes("_")) {
+            gameLost();
+        }
+    }
+}
+ 
+function gameWon() {
+    gamesWon++;
+    visibilitySwap("post-game");
+}
+
+function gameLost() {
+    gamesLost++;
+    visibilitySwap("post-game");
 }
 
 function getRandomCountry() {
@@ -64,11 +171,12 @@ function countrySelector(alphaCode) {
     console.log(urlString);
     var request = new XMLHttpRequest();
     request.open('GET', urlString, true);
-    request.onload = function() {
+    request.onload = async function() {
         var res = JSON.parse(this.response);
 
         if (request.status === 200) {
             country = res;
+            // countryName = country.name;
             var lat = parseFloat(country.latlng[0]);
             var lng = parseFloat(country.latlng[1]);
             var coords = {lat: lat, lng: lng};
@@ -81,9 +189,9 @@ function countrySelector(alphaCode) {
             console.log('error');
         }
     }
-    
     request.send();
+
 }
 
-generateSelectors();
-// countrySelector(getRandomCountry());
+countrySelector(getRandomCountry())
+
