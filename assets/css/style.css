@@ -6,7 +6,7 @@ body {
 }
 
 #map {
-    height: 400px;
+    height: 500px;
     width: 100%; 
    }
 
@@ -48,5 +48,5 @@ body {
 }
 
 button {
-    opacity: 0.8;
+    opacity: .8;
 }

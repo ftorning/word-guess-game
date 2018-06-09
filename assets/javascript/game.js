@@ -17,6 +17,11 @@ var gameTitle = document.getElementById('game-title');
 var postGameTitle = document.getElementById('post-game-title');
 var postGameWordDisplay = document.getElementById('post-game-word');
 var playAgainButton = document.getElementById('play-again-button');
+var flag = document.getElementById('flag');
+var countryNameText = document.getElementById('country-name-text');
+var capitalNameText = document.getElementById('capital-name-text');
+var subregionText = document.getElementById('subregion-text');
+var populationText = document.getElementById('population-text');
 
 var guessCount = 8;
 var gameType = '';
@@ -166,13 +171,21 @@ function setGameBoard(guess=null) {
 function gameWon() {
     gamesWon++;
     postGameTitle.textContent = winTitle;
-    postGameWordDisplay.textContent = word; 
-    visibilitySwap("post-game");
+    gameOver(); 
 }
 
 function gameLost() {
     gamesLost++;
     postGameTitle.textContent = lossTitle;
+    gameOver();
+}
+
+function gameOver() {
+    flag.src = country.flag;
+    countryNameText.textContent = country.name;
+    capitalNameText.textContent = country.capital;
+    subregionText.textContent = country.subregion;
+    populationText.textContent = country.population;
     postGameWordDisplay.textContent = word;
     visibilitySwap("post-game");
 }
