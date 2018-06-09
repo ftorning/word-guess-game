@@ -16,11 +16,10 @@ var hintList = document.getElementById('hint-list');
 var gameTitle = document.getElementById('game-title');
 var postGameTitle = document.getElementById('post-game-title');
 var postGameWordDisplay = document.getElementById('post-game-word');
+var playAgainButton = document.getElementById('play-again-button');
 
-var selectors;
 var guessCount = 8;
 var gameType = '';
-var score = 100;
 var word = '';
 var wordSplit = [];
 var wordLength = 0;
@@ -30,7 +29,6 @@ var gamesWon = 0;
 var gamesLost = 0;
 var hintCount = 0;
 var currentGameState = [];
-var guessArray = [];
 var lossTitle = "So close....."
 var winTitle = "You got it!"
 
@@ -52,6 +50,12 @@ var characterArray = ["a","b","c","d","e","f","g","h","i","j","k","l",
 countryGame.addEventListener("click", startCountryGame);
 capitalGame.addEventListener("click", startCapitalGame);
 hintRequest.addEventListener("click", getHint);
+playAgainButton.addEventListener("click", playAgain);
+
+function playAgain() {
+    countrySelector(getRandomCountry());
+    visibilitySwap("banner");
+}
 
 function getHint() {
     hintsDisplay.classList.remove("d-none");
@@ -62,7 +66,6 @@ function guess() {
     this.style.backgroundColor = "#A9A9A9";
     this.style.pointerEvents = "none";
     setGameBoard(this.textContent);
-    console.log(this.textContent);
 }
 
 function startCountryGame() {
@@ -78,6 +81,7 @@ function startCapitalGame() {
 }
 
 function startGame() {
+    currentGameState = [];
     visibilitySwap('game');
     setSelectors();
     guessCount = 8;
@@ -114,6 +118,9 @@ function visibilitySwap(container) {
 
 function setSelectors() {
     mySelectors = document.getElementById('selectors');
+    while (mySelectors.firstChild) {
+        mySelectors.removeChild(mySelectors.firstChild);
+    }
     charList = document.createElement('ul');
     charList.id = 'charList';
     for (let i = 0; i < characterArray.length; i++) {
@@ -172,13 +179,11 @@ function gameLost() {
 
 function getRandomCountry() {
     var alphaCode = alphaCodes[Math.floor(Math.random() * alphaCodes.length)].toLowerCase();
-    console.log(alphaCode);
     return alphaCode;
 }
 
 function countrySelector(alphaCode) {
     var urlString = "https://restcountries.eu/rest/v2/alpha/" + alphaCode;
-    console.log(urlString);
     var request = new XMLHttpRequest();
     request.open('GET', urlString, true);
     request.onload = async function() {
