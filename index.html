@@ -29,23 +29,23 @@
             <div class="col-xs-0 col-md-3 sidebar"></div>
             <div class="col-xs-12 col-md-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="dash-card">
                         <h2 class="card-title text-center">Game Dashboard</h2>
                         <div class="row">
-                            <div class="col-sm-12 col-md-6">
+                            <div class="col-xs-6">
                                 <p>Guesses Left: <span id="guess-count"></span></p>
                                 
                             </div>
-                            <div class="col-sm-12 col-md-6">
+                            <div class="col-xs-6 ml-auto">
                                 <p>Hints Used: <span id="hint-count"></span></p>
                                 
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 col-md-6">
+                            <div class="col-xs-6">
                                 <p>Games Won: <span id="win-count"></span></p>
                             </div>
-                            <div class="col-sm-12 col-md-6">
+                            <div class="col-xs-6 ml-auto">
                                 <p>Games Lost: <span id="loss-count"></span></p>
                             </div>
                         </div>
@@ -54,6 +54,7 @@
             </div>
             <div class="col-xs-0 col-md-3 sidebar"></div>
         </div>
+    
         <div class="row d-none" id="hint-area">
             <div class="col-xs-0 col-md-3 sidebar"></div>
             <div class="col-xs-12 col-md-6">
@@ -69,8 +70,16 @@
         <div class="row">
             <div class="col-xs-0 col-md-3 sidebar"></div>
             <div class="col-xs-12 col-md-6 text-center">
-                <h2>Your Word</p>
-                <h1 id="game-state"></h1>
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Your <span id="game-title"></span></p>
+                        <h1 id="game-state"></h1>
+                        <br>
+                        <button type="button" 
+                            class="btn btn-success btn-lg d-none" 
+                            id="hint-button">Get Hint</button>
+                    </div>
+                </div>
                 <!-- <div id="game-area"></div> -->
             </div>
             <div class="col-xs-0 col-md-3 sidebar"></div>
@@ -78,20 +87,48 @@
         <div class="row">
             <div class="col-xs-0 col-md-3 sidebar"></div>
             <div class="col-xs-12 col-md-6">
-                <div id="selectors"></div>
+                <div class="card">
+                    <div class="card-body">
+                        <div id="selectors"></div>
+                    </div>
+                </div>
             </div>
             <div class="col-xs-0 col-md-3 sidebar"></div>
         </div>
-        <button type="button" class="btn btn-success btn-lg" id="hint-button">Get Hint</button>
     </div>
     <div class="container d-none" id="post-game-container">
         <div class="row">
-            <div class="col-xs-0 col-md-3 sidebar"></div>
-            <div class="col-xs-12 col-md-6">
-                <p>post game facts</p>
-                <div id="map"></div>
+            <div class="col-xs-0 col-sm-1 sidebar"></div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 id="post-game-title" class="text-center"></h1>
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-0 col-md-3 sidebar"></div>
+            <div class="col-xs-0 col-sm-1 sidebar"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-0 col-sm-1 sidebar"></div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 id="post-game-word" class="text-center"></h1>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <h3>Location</h3>
+                                <div id="map"></div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <h3>Quick Facts</h3>
+                                <p>facts placeholder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-0 col-sm-1 sidebar"></div>
         </div>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js" type="text/javascript"></script>

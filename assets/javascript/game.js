@@ -1,4 +1,4 @@
-console.log('Ayyyooo');
+console.log('CHEATERS NEVER PROSPER');
 
 var banner = document.getElementById('banner');
 var countryGame = document.getElementById('country-name-game');
@@ -13,6 +13,9 @@ var gameStateDisplay = document.getElementById('game-state');
 var hintsDisplay = document.getElementById('hint-area');
 var hintRequest = document.getElementById('hint-button');
 var hintList = document.getElementById('hint-list');
+var gameTitle = document.getElementById('game-title');
+var postGameTitle = document.getElementById('post-game-title');
+var postGameWordDisplay = document.getElementById('post-game-word');
 
 var selectors;
 var guessCount = 8;
@@ -28,6 +31,8 @@ var gamesLost = 0;
 var hintCount = 0;
 var currentGameState = [];
 var guessArray = [];
+var lossTitle = "So close....."
+var winTitle = "You got it!"
 
 var alphaCodes = ["AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM",
 "BT","BO","BA","BW","BV","BR","VG","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","HK","MO","CX","CC", "CO","KM","CG","CD","CK","CR","CI","HR","CU","CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER","EE","ET","FK","FO","FJ",
@@ -62,13 +67,13 @@ function guess() {
 
 function startCountryGame() {
     word = country.name;
-    gameType = 'country';
+    gameType = 'Country';
     startGame();
 }
 
 function startCapitalGame() {
     word = country.capital;
-    gameType = 'capital';
+    gameType = 'Capital';
     startGame();
 }
 
@@ -122,6 +127,7 @@ function setSelectors() {
 }
 
 function setGameBoard(guess=null) {
+    gameTitle.textContent = gameType;
     if (!guess) {  // && currentGameState.length === 0
         for (let i = 0; i < wordSplit.length; i++) {
             if (characterArray.includes(wordSplit[i].toLowerCase())) {
@@ -152,11 +158,15 @@ function setGameBoard(guess=null) {
  
 function gameWon() {
     gamesWon++;
+    postGameTitle.textContent = winTitle;
+    postGameWordDisplay.textContent = word; 
     visibilitySwap("post-game");
 }
 
 function gameLost() {
     gamesLost++;
+    postGameTitle.textContent = lossTitle;
+    postGameWordDisplay.textContent = word;
     visibilitySwap("post-game");
 }
 
